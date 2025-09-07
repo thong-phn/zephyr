@@ -11,8 +11,9 @@ Add the tflite-micro module to your West manifest and pull it:
 
 .. code-block:: console
 
-    west config manifest.project-filter -- +tflite-micro
-    west update
+   west config manifest.project-filter -- +tflite-micro
+   west config manifest.group-filter -- +optional
+   west update
 
 Build the project
 
