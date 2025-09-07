@@ -1,0 +1,7 @@
+#ifndef MICRO_SPEECH_OPENAMP_AUDIO_PREPROCESSOR_INT8_MODEL_H_
+#define MICRO_SPEECH_OPENAMP_AUDIO_PREPROCESSOR_INT8_MODEL_H_
+
+extern const unsigned char g_audio_preprocessor_int8_model[];
+extern const unsigned int g_audio_preprocessor_int8_model_len;
+
+#endif /* MICRO_SPEECH_OPENAMP_AUDIO_PREPROCESSOR_INT8_MODEL_H_ */
