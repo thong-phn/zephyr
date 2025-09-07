@@ -1,5 +1,8 @@
-.. zephyr:code-sample:: tflite-micro-speech-openamp
+.. zephyr:code-sample:: tflite-microspeech-openamp
    :name: Microspeech Openamp
+
+Overview
+********************
 
 Building and Running
 ********************
