@@ -12,6 +12,7 @@ west config manifest.project-filter -- +tflite-micro
 west config manifest.group-filter -- +optional
 west update
 
+
 Build
 
 .. code-block:: console
