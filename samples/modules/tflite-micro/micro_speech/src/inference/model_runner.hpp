@@ -13,7 +13,8 @@ extern Features g_features;
 
 // The public API for running audio processing
 extern "C" {
-int micro_speech_process_audio(const int16_t *audio_data, size_t audio_data_size);
+    void model_runner_init(void);
+    int micro_speech_process_audio(const int16_t *audio_data, size_t audio_data_size);
 }
 
 #endif /* MICRO_SPEECH_OPENAMP_MODEL_RUNNER_H_ */
