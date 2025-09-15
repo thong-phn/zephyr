@@ -1,13 +1,20 @@
 /*
  * Copyright (c) 2019 Oticon A/S
+ * Copyright (c) 2025 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr/ztest.h>
-#include <zephyr/sys/util.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <zephyr/ztest.h>
+#include <zephyr/sys/util.h>
+#include <zephyr/sys/util_utf8.h>
+#include <zephyr/ztest.h>
+#include <zephyr/ztest_assert.h>
+#include <zephyr/ztest_test.h>
 
 ZTEST(util, test_u8_to_dec) {
 	char text[4];
@@ -845,6 +852,26 @@ ZTEST(util, test_mem_xor_128)
 	zassert_mem_equal(expected_result, dst, 16);
 }
 
+ZTEST(util, test_sys_count_bits)
+{
+	uint8_t zero = 0U;
+	uint8_t u8 = 29U;
+	uint16_t u16 = 29999U;
+	uint32_t u32 = 2999999999U;
+	uint64_t u64 = 123456789012345ULL;
+	uint8_t u8_arr[] = {u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8,
+			    u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8, u8};
+
+	zassert_equal(sys_count_bits(&zero, sizeof(zero)), 0);
+	zassert_equal(sys_count_bits(&u8, sizeof(u8)), 4);
+	zassert_equal(sys_count_bits(&u16, sizeof(u16)), 10);
+	zassert_equal(sys_count_bits(&u32, sizeof(u32)), 20);
+	zassert_equal(sys_count_bits(&u64, sizeof(u64)), 23);
+
+	zassert_equal(sys_count_bits(u8_arr, sizeof(u8_arr)), 128);
+	zassert_equal(sys_count_bits(&u8_arr[1], sizeof(u8_arr) - sizeof(u8_arr[0])), 124);
+}
+
 ZTEST(util, test_CONCAT)
 {
 #define _CAT_PART1 1
@@ -1008,7 +1035,7 @@ ZTEST(util, test_utf8_lcpy_null_termination)
 ZTEST(util, test_utf8_count_chars_ASCII)
 {
 	const char *test_str = "I have 15 char.";
-	ssize_t count = utf8_count_chars(test_str);
+	int count = utf8_count_chars(test_str);
 
 	zassert_equal(count, 15, "Failed to count ASCII");
 }
@@ -1016,7 +1043,7 @@ ZTEST(util, test_utf8_count_chars_ASCII)
 ZTEST(util, test_utf8_count_chars_non_ASCII)
 {
 	const char *test_str = "Hello دنیا!🌍";
-	ssize_t count = utf8_count_chars(test_str);
+	int count = utf8_count_chars(test_str);
 
 	zassert_equal(count, 12, "Failed to count non-ASCII");
 }
@@ -1024,8 +1051,8 @@ ZTEST(util, test_utf8_count_chars_non_ASCII)
 ZTEST(util, test_utf8_count_chars_invalid_utf)
 {
 	const char test_str[] = { (char)0x80, 0x00 };
-	ssize_t count = utf8_count_chars(test_str);
-	ssize_t expected_result = -EINVAL;
+	int count = utf8_count_chars(test_str);
+	int expected_result = -EINVAL;
 
 	zassert_equal(count, expected_result, "Failed to detect invalid UTF");
 }

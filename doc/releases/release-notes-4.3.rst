@@ -48,12 +48,8 @@ https://docs.zephyrproject.org/latest/security/vulnerabilities.html
 API Changes
 ***********
 
-* RTIO
-
-  * :c:func:`rtio_is_spi`
-  * :c:func:`rtio_is_cspi`
-  * :c:func:`rtio_is_i3c`
-  * :c:func:`rtio_read_regs_async`
+..
+  Only removed, deprecated and new APIs, changes go in migration guide.
 
 Removed APIs and options
 ========================
@@ -66,6 +62,9 @@ Deprecated APIs and options
 ===========================
 
 * :dtcompatible:`maxim,ds3231` is deprecated in favor of :dtcompatible:`maxim,ds3231-rtc`.
+
+* :c:enum:`bt_hci_bus` was deprecated as it was not used. :c:macro:`BT_DT_HCI_BUS_GET` should be
+  used instead.
 
 New APIs and options
 ====================
@@ -165,6 +164,12 @@ New APIs and options
     * :c:macro:`LOG_HEXDUMP_INF_RATELIMIT_RATE` - Rate-limited info hexdump macro (explicit rate)
     * :c:macro:`LOG_HEXDUMP_DBG_RATELIMIT_RATE` - Rate-limited debug hexdump macro (explicit rate)
 
+* Management
+
+  * hawkBit
+
+    * :kconfig:option:`CONFIG_HAWKBIT_REBOOT_NONE`
+
 * Power management
 
    * :c:func:`pm_device_driver_deinit`
@@ -182,6 +187,14 @@ New APIs and options
       * :kconfig:option:`CONFIG_SHELL_MQTT_CONNECT_TIMEOUT_MS`
       * :kconfig:option:`CONFIG_SHELL_MQTT_WORK_DELAY_MS`
       * :kconfig:option:`CONFIG_SHELL_MQTT_LISTEN_TIMEOUT_MS`
+
+* Storage
+
+    * :kconfig:option:`CONFIG_FILE_SYSTEM_SHELL_LS_SIZE`
+
+* Sys
+
+  * :c:func:`sys_count_bits`
 
 .. zephyr-keep-sorted-stop
 

@@ -256,7 +256,7 @@
 			axisram3: memory@34200000 {
 				compatible = "zephyr,memory-region", "mmio-sram";
 				zephyr,memory-region = "AXISRAM3";
-				zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+				zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_RAM)>;
 			};
 		};
 
@@ -271,7 +271,7 @@
 			axisram4: memory@34270000 {
 				compatible = "zephyr,memory-region", "mmio-sram";
 				zephyr,memory-region = "AXISRAM4";
-				zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+				zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_RAM)>;
 			};
 		};
 
@@ -286,7 +286,7 @@
 			axisram5: memory@342e0000 {
 				compatible = "zephyr,memory-region", "mmio-sram";
 				zephyr,memory-region = "AXISRAM5";
-				zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+				zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_RAM)>;
 			};
 		};
 
@@ -301,7 +301,7 @@
 			axisram6: memory@34350000 {
 				compatible = "zephyr,memory-region", "mmio-sram";
 				zephyr,memory-region = "AXISRAM6";
-				zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+				zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_RAM)>;
 			};
 		};
 
@@ -718,39 +718,28 @@
 				 <&rctl STM32_RESET(APB5, 6)>;
 			status = "disabled";
 
-			ports {
+			pipes {
+				compatible = "st,stm32-dcmipp-pipes";
 				#address-cells = <1>;
 				#size-cells = <0>;
 
-				port@0 {
+				pipe_dump: pipe@0 {
 					reg = <0>;
-
-					endpoint {
-						remote-endpoint-label = "";
-						bus-type = <VIDEO_BUS_TYPE_CSI2_DPHY>;
-					};
 				};
 
-				port@1 {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
+				pipe_main: pipe@1 {
 					reg = <1>;
+				};
 
-					dcmipp_pipe_dump: endpoint@0 {
-						compatible = "st,stm32-dcmipp-pipe";
-						reg = <0>;
-					};
+				pipe_aux: pipe@2 {
+					reg = <2>;
+				};
+			};
 
-					dcmipp_pipe_main: endpoint@1 {
-						compatible = "st,stm32-dcmipp-pipe";
-						reg = <1>;
-					};
-
-					dcmipp_pipe_aux: endpoint@2 {
-						compatible = "st,stm32-dcmipp-pipe";
-						reg = <2>;
-					};
+			port {
+				endpoint {
+					remote-endpoint-label = "";
+					bus-type = <VIDEO_BUS_TYPE_CSI2_DPHY>;
 				};
 			};
 		};
@@ -763,7 +752,7 @@
 
 			mac: ethernet {
 				compatible = "st,stm32n6-ethernet", "st,stm32h7-ethernet",
-					"st,stm32-ethernet";
+					     "st,stm32-ethernet";
 				interrupts = <179 0>;
 				clock-names = "mac-clk-tx", "mac-clk-rx";
 				clocks = <&rcc STM32_CLOCK(AHB5, 23)>,

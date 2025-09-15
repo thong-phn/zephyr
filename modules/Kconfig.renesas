@@ -30,6 +30,11 @@ config USE_RA_FSP_I3C
 	help
 	  Enable RA FSP I3C driver
 
+config USE_RA_FSP_DMA
+	bool
+	help
+	  Enable RA FSP DMA driver
+
 config USE_RA_FSP_DTC
 	bool
 	help
@@ -159,6 +164,11 @@ config USE_RA_FSP_SDHI
 	help
 	  Enable RA FSP SDHI driver
 
+config USE_RA_FSP_CRC
+	bool
+	help
+	  Enable RA FSP CRC driver
+
 config USE_RA_FSP_DAC
 	bool
 	help
@@ -241,6 +251,11 @@ config USE_RZ_FSP_SCIF_UART
 	bool
 	help
 	  Enable RZ FSP SCIF UART driver
+
+config USE_RZ_FSP_IIC_MASTER
+	bool
+	help
+	  Enable RZ FSP IIC MASTER driver
 
 config USE_RZ_FSP_RIIC_MASTER
 	bool

@@ -823,6 +823,17 @@ CMSIS-NN integration:
   tests:
     - libraries.cmsis_nn
 
+CRC:
+  status: maintained
+  maintainers:
+    - thenguyenyf
+  files:
+    - include/zephyr/sys/crc.h
+    - subsys/crc/
+    - tests/subsys/crc/
+  labels:
+    - "area: CRC"
+
 Cache:
   status: maintained
   maintainers:
@@ -1258,6 +1269,19 @@ Documentation Infrastructure:
   tests:
     - drivers.can
     - canbus
+
+"Drivers: CRC":
+  status: maintained
+  maintainers:
+    - thenguyenyf
+  files:
+    - drivers/crc/
+    - dts/bindings/crc/
+    - include/zephyr/drivers/crc.h
+    - samples/drivers/crc/
+    - tests/drivers/crc/
+  labels:
+    - "area: CRC"
 
 "Drivers: Charger":
   status: maintained
@@ -3124,8 +3148,11 @@ MAINTAINERS file:
     - stephanosio
   files:
     - MAINTAINERS.yml
+    - scripts/get_maintainer.py
+    - scripts/set_assignees.py
+    - scripts/check_maintainers.py
   labels:
-    - "area: Process"
+    - "area: MAINTAINER File"
   description: >-
     Zephyr Maintainers File
 
@@ -3639,6 +3666,25 @@ Networking:
   tests:
     - net.dhcpv4_client
     - net.dhcpv4_server
+
+"Networking: DSA":
+  status: maintained
+  maintainers:
+    - yangbolu1991
+    - JiafeiPan
+  files:
+    - subsys/net/l2/ethernet/dsa/
+    - drivers/ethernet/dsa/
+    - dts/bindings/dsa/
+    - doc/connectivity/networking/dsa*
+    - include/zephyr/net/dsa*.h
+    - include/zephyr/dt-bindings/ethernet/dsa*.h
+    - samples/net/dsa/
+  labels:
+    - "area: Networking"
+    - "area: DSA"
+  tests:
+    - sample.net.dsa
 
 "Networking: HTTP":
   status: maintained
@@ -4181,6 +4227,7 @@ Renesas RA Platforms:
     - duynguyenxa
     - thaoluonguw
     - thenguyenyf
+    - khoa-nguyen-18
   files:
     - boards/arduino/uno_r4/
     - boards/renesas/*ra*/
@@ -4192,6 +4239,7 @@ Renesas RA Platforms:
     - samples/boards/renesas/
     - tests/boards/renesas/
     - include/zephyr/drivers/misc/renesas_ra_external_interrupt/
+    - include/zephyr/drivers/misc/interconn/renesas_elc/
   labels:
     - "platform: Renesas RA"
   description: >-
@@ -4909,7 +4957,6 @@ Utilities:
     - dcpleung
     - peter-mitsis
   files:
-    - lib/crc/
     - lib/utils/
     - tests/unit/timeutil/
     - tests/unit/time_units/
@@ -5325,13 +5372,13 @@ West:
     - nika-nordic
     - masz-nordic
   collaborators:
-    - hubertmis
     - nordic-krch
     - kl-cruz
     - magp-nordic
     - jaz1-nordic
     - mif1-nordic
     - adamkondraciuk
+    - lstnl
   files:
     - modules/hal_nordic/
   labels:
@@ -6026,6 +6073,7 @@ nRF Platforms:
     - kl-cruz
     - magp-nordic
     - nika-nordic
+    - lstnl
   files:
     - boards/nordic/
     - drivers/*/*nrf*.c
