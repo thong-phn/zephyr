@@ -280,24 +280,7 @@ TfLiteStatus run_micro_speech_inference(const Features& features) {
         std::max_element(std::begin(category_predictions), std::end(category_predictions))
     );
 
-    // Handle prediction logging with change detection
-    if (g_last_prediction_index == -1) { // First prediction
-        LOG_INF("Detected: %s", kCategoryLabels[prediction_index]);
-        // Send result through rpmsg
-        // if (tty_ept.addr != RPMSG_ADDR_ANY) {
-        //     char msg_buff[64];
-        //     snprintf(msg_buff, sizeof(msg_buff), "DETECTED: %s\n", kCategoryLabels[prediction_index]);
-        //     rpmsg_send(&tty_ept, msg_buff, strlen(msg_buff));
-        // }
-    } else if (prediction_index != g_last_prediction_index) { // Prediction changed
-        LOG_INF("Detected: %s", kCategoryLabels[prediction_index]);
-        // // Send result through rpmsg
-        // if (tty_ept.addr != RPMSG_ADDR_ANY) {
-        //     char msg_buff[64];
-        //     snprintf(msg_buff, sizeof(msg_buff), "DETECTED: %s\n", kCategoryLabels[prediction_index]);
-        //     rpmsg_send(&tty_ept, msg_buff, strlen(msg_buff));
-        // }
-    }  // For unchanged predictions, don't log anything
+    LOG_INF("Detected: %s", kCategoryLabels[prediction_index]);
      // Send every result through rpmsg
     if (tty_ept.addr != RPMSG_ADDR_ANY) {
         char msg_buff[64];
