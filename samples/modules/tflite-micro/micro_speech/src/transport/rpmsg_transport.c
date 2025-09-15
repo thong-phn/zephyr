@@ -7,6 +7,7 @@
 #include <metal/sys.h>
 #include <metal/io.h>
 #include <resource_table.h>
+#include <addr_translation.h>
 
 #ifdef CONFIG_SHELL_BACKEND_RPMSG
 #include <zephyr/shell/shell_rpmsg.h>
@@ -25,6 +26,13 @@ LOG_MODULE_REGISTER(rpmsg_transport, LOG_LEVEL_DBG);
 
 /* Stack size for the management thread */
 #define APP_TASK_STACK_SIZE (1024)
+
+#if CONFIG_IPM_MAX_DATA_SIZE > 0
+
+#define	IPM_SEND(dev, w, id, d, s) ipm_send(dev, w, id, d, s)
+#else
+#define IPM_SEND(dev, w, id, d, s) ipm_send(dev, w, id, NULL, 0)
+#endif
 
 /* Thread definitions */
 K_THREAD_STACK_DEFINE(thread_mng_stack, APP_TASK_STACK_SIZE);
@@ -102,7 +110,7 @@ static int mailbox_notify(void *priv, uint32_t id)
 {
     ARG_UNUSED(priv);
     LOG_DBG("%s: msg received", __func__);
-    ipm_send(ipm_handle, 0, id, NULL, 0);
+    ipm_send(ipm_handle, 0, id, &id, 4);
     return 0;
 }
 
@@ -119,7 +127,7 @@ static int platform_init(void)
     }
 
     metal_io_init(shm_io, (void *)SHM_START_ADDR, &shm_physmap,
-              SHM_SIZE, -1, 0, NULL);
+		      SHM_SIZE, -1, 0, addr_translation_get_ops(shm_physmap));
 
     rsc_table_get(&rsc_table, &rsc_size);
     rsc_tab_physmap = (uintptr_t)rsc_table;
