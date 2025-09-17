@@ -1,7 +1,0 @@
-#ifndef MICRO_SPEECH_OPENAMP_MICRO_SPEECH_QUANTIZED_MODEL_H_
-#define MICRO_SPEECH_OPENAMP_MICRO_SPEECH_QUANTIZED_MODEL_H_
-
-extern const unsigned char g_micro_speech_quantized_model[];
-extern const unsigned int g_micro_speech_quantized_model_len;
-
-#endif /* MICRO_SPEECH_OPENAMP_MICRO_SPEECH_QUANTIZED_MODEL_H_ */
