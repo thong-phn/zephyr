@@ -110,7 +110,7 @@ static int mailbox_notify(void *priv, uint32_t id)
 {
     ARG_UNUSED(priv);
     LOG_DBG("%s: msg received", __func__);
-    ipm_send(ipm_handle, 0, id, &id, 4);
+    IPM_SEND(ipm_handle, 0, id, &id, 4);
     return 0;
 }
 
