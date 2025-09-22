@@ -214,7 +214,7 @@ static void rpmsg_mng_task(void *arg1, void *arg2, void *arg3)
     unsigned int len;
     int ret = 0;
 
-    LOG_INF("OpenAMP[remote] Linux responder demo started");
+    // LOG_INF("OpenAMP[remote] Linux responder demo started");
 
     ret = platform_init();
     if (ret) {
@@ -240,7 +240,7 @@ static void rpmsg_mng_task(void *arg1, void *arg2, void *arg3)
 
 task_end:
     cleanup_system();
-    LOG_INF("OpenAMP ended");
+    // LOG_INF("OpenAMP ended");
 }
 
 /* --- Public Function Implementation ---*/

@@ -145,7 +145,7 @@ void app_audio_processing_thread(void *arg1, void *arg2, void *arg3)
 
 	char debug_buff[128];
 
-	LOG_INF("Audio processing thread started");
+	// LOG_INF("Audio processing thread started");
 
 	while (1) {
 		k_sem_take(&processing_buffer_ready_sem, K_FOREVER); // Wait for a full buffer or EOF

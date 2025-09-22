@@ -88,7 +88,7 @@ TfLiteStatus initialize_interpreters() {
         return kTfLiteOk;  // Already initialized
     }    
 
-    LOG_INF("Initializing static interpreters");
+    // LOG_INF("Initializing static interpreters");
     
     /* Audio preprocessor: Get model */
     g_audio_preprocessor_model = tflite::GetModel(g_audio_preprocessor_int8_model);
@@ -136,7 +136,7 @@ TfLiteStatus initialize_interpreters() {
     }
     
     g_interpreters_initialized = true;
-    LOG_INF("Static interpreters initialized successfully");
+    // LOG_INF("Static interpreters initialized successfully");
     if (tty_ept.addr != RPMSG_ADDR_ANY) {
         char msg_buff[64];
         snprintf(msg_buff, sizeof(msg_buff), "[Z] Init Done \n");
@@ -299,7 +299,7 @@ TfLiteStatus run_micro_speech_inference(const Features& features) {
 extern "C" {
 
 void model_runner_init(void) {
-    LOG_INF("--- Initializing Model Runner ---");
+    //LOG_INF("--- Initializing Model Runner ---");
     
     // Initialize static interpreters
     if (initialize_interpreters() != kTfLiteOk) {
@@ -307,7 +307,7 @@ void model_runner_init(void) {
         return;
     }
     
-    LOG_INF("--- Listening for commands ---");
+    // LOG_INF("--- Listening for commands ---");
 }
 
 int micro_speech_process_audio(const int16_t *audio_data,
