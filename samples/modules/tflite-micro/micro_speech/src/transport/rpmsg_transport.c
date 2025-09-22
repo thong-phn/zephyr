@@ -13,7 +13,7 @@
 #include <zephyr/shell/shell_rpmsg.h>
 #endif
 
-// LOG_MODULE_REGISTER(rpmsg_transport);
+LOG_MODULE_REGISTER(rpmsg_transport, LOG_LEVEL_ERR);
 
 #if !DT_HAS_CHOSEN(zephyr_ipc_shm)
 #error "Sample requires definition of shared memory for rpmsg"
