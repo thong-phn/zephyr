@@ -1,7 +1,7 @@
 #include "model_runner.hpp"
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(model_runner, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(model_runner);
 
 #include "tensorflow/lite/core/c/common.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
