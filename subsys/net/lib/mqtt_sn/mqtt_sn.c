@@ -351,7 +351,7 @@ static struct mqtt_sn_gateway *mqtt_sn_gw_create(uint8_t gw_id, short duration,
 		return NULL;
 	}
 
-	__ASSERT(gw_addr.size < CONFIG_MQTT_SN_LIB_MAX_ADDR_SIZE,
+	__ASSERT(gw_addr.size <= CONFIG_MQTT_SN_LIB_MAX_ADDR_SIZE,
 		 "Gateway address is larger than allowed by CONFIG_MQTT_SN_LIB_MAX_ADDR_SIZE");
 
 	memset(gw, 0, sizeof(*gw));
@@ -854,7 +854,7 @@ static int process_ping(struct mqtt_sn_client *client, int64_t *next_cycle)
 		next_ping = client->last_ping + T_RETRY_MSEC;
 	}
 
-	if (next_ping < now) {
+	if (next_ping <= now) {
 		if (!client->ping_retries--) {
 			LOG_WRN("Ping ran out of retries");
 			mqtt_sn_disconnect_internal(client);

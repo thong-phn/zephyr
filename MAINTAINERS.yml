@@ -399,6 +399,7 @@ Binary Descriptors:
   maintainers:
     - yonsch
   files:
+    - doc/services/binary_descriptors/
     - subsys/bindesc/
     - include/zephyr/bindesc.h
     - samples/subsys/bindesc/
@@ -690,8 +691,9 @@ Bootloaders:
 Bouffalolab Platforms:
   status: maintained
   maintainers:
-    - nandojve
     - VynDragon
+  collaborators:
+    - josuah
   files:
     - boards/bflb/
     - drivers/*/*bflb*
@@ -1330,6 +1332,7 @@ Documentation Infrastructure:
     - dts/bindings/comparator/
     - include/zephyr/drivers/comparator.h
     - include/zephyr/drivers/comparator/
+    - include/zephyr/dt-bindings/comparator/
     - tests/drivers/build_all/comparator/
     - tests/drivers/comparator/
     - doc/hardware/peripherals/comparator.rst
@@ -1407,6 +1410,7 @@ Documentation Infrastructure:
   files:
     - drivers/dac/
     - include/zephyr/drivers/dac.h
+    - include/zephyr/drivers/dac/
     - dts/bindings/dac/
     - include/zephyr/dt-bindings/dac/
     - tests/drivers/dac/
@@ -1637,6 +1641,7 @@ Documentation Infrastructure:
   status: maintained
   maintainers:
     - aaronemassey
+    - DBS06
     - teburd
   collaborators:
     - DBS06
@@ -1722,6 +1727,7 @@ Documentation Infrastructure:
     - drivers/haptics/
     - dts/bindings/haptics/
     - include/zephyr/drivers/haptics.h
+    - include/zephyr/drivers/haptics/
     - doc/hardware/peripherals/haptics.rst
     - tests/drivers/build_all/haptics/
     - samples/drivers/haptics/
@@ -1892,6 +1898,7 @@ Documentation Infrastructure:
   status: odd fixes
   files:
     - drivers/memc/
+    - include/zephyr/drivers/memc/
     - samples/drivers/memc/
     - tests/drivers/memc/
     - include/zephyr/dt-bindings/memory-controller/
@@ -1911,6 +1918,7 @@ Documentation Infrastructure:
   files:
     - drivers/mfd/
     - include/zephyr/drivers/mfd/
+    - include/zephyr/dt-bindings/mfd/
     - dts/bindings/mfd/
     - tests/drivers/build_all/mfd/
   labels:
@@ -2412,6 +2420,7 @@ Documentation Infrastructure:
     - drivers/video/
     - include/zephyr/drivers/video.h
     - include/zephyr/drivers/video-controls.h
+    - include/zephyr/dt-bindings/video/
     - doc/hardware/peripherals/video.rst
     - tests/drivers/*/video/
     - dts/bindings/video/
@@ -2675,9 +2684,8 @@ Formatted Output:
 GD32 Platforms:
   status: maintained
   maintainers:
-    - nandojve
-  collaborators:
     - soburi
+  collaborators:
     - cameled
   files:
     - boards/gd/
@@ -2814,6 +2822,7 @@ Infineon Platforms:
     - boards/cypress/
     - boards/infineon/
     - drivers/*/*ifx_cat1*
+    - drivers/*/*ifx*
     - drivers/*/*xmc*
     - drivers/sensor/infineon/
     - dts/arm/infineon/
@@ -2892,6 +2901,7 @@ Intel Platforms (X86):
     - ceolin
   files:
     - boards/intel/adl/
+    - boards/intel/btl/
     - boards/intel/ehl/
     - boards/intel/rpl/
     - dts/x86/intel/
@@ -3058,11 +3068,11 @@ LiteX Platforms:
   status: maintained
   maintainers:
     - tgorochowik
-    - kgugala
     - fkokosinski
-  collaborators:
-    - mateusz-holenko
     - maass-hamburg
+  collaborators:
+    - kgugala
+    - mateusz-holenko
   files:
     - boards/enjoydigital/litex_vexriscv/
     - drivers/*/*litex*
@@ -3876,6 +3886,7 @@ Nuvoton NPCX Platforms:
   files:
     - soc/nuvoton/npcx/
     - boards/nuvoton/npcx*/
+    - boards/nuvoton/npck*/
     - dts/arm/nuvoton/
     - dts/bindings/*/*npcx*
     - drivers/*/*_npcx*.c
@@ -4198,7 +4209,6 @@ Release Notes:
 Renesas R-Car Platforms:
   status: maintained
   maintainers:
-    - aaillet
     - lorc
   collaborators:
     - xakep-amatop
@@ -4272,10 +4282,9 @@ Renesas SmartBond Platforms:
   status: maintained
   maintainers:
     - ioannis-karachalios
-    - andrzej-kaczmarek
-    - blauret
-  collaborators:
     - ydamigos
+  collaborators:
+    - blauret
   files:
     - boards/renesas/da14*/
     - drivers/*/*smartbond*
@@ -4498,6 +4507,24 @@ Shields:
   tests:
     - sample.shields
 
+SiFli SF32LB Platforms:
+  status: maintained
+  maintainers:
+    - gmarull
+  collaborators:
+    - cameled
+  files:
+    - boards/sifli/
+    - drivers/*/*sf32lb*
+    - dts/arm/sifli/
+    - dts/bindings/*/*sf32lb*
+    - scripts/west_commands/runners/sftool.py
+    - soc/sifli/
+  labels:
+    - "platform: SF32LB"
+  description: >-
+    SiFli SF32LB SoCs, dts files, related drivers and boards.
+
 Silabs Platforms:
   status: maintained
   maintainers:
@@ -4662,6 +4689,7 @@ TI K3 Platforms:
     - dts/arm/ti/am6*
     - dts/arm/ti/j7*
     - dts/bindings/*/ti,k3*
+    - dts/vendor/ti/
     - soc/ti/k3/
   labels:
     - "platform: TI K3"
@@ -4968,6 +4996,8 @@ Utilities:
     - tests/unit/list/
     - tests/unit/intmath/
     - tests/unit/pot/
+    - tests/unit/hex/
+    - tests/unit/winstream/
     - tests/lib/onoff/
     - tests/lib/sys_util/
     - tests/lib/sprintf/
@@ -5192,7 +5222,8 @@ West:
   collaborators:
     - tomi-font
     - ithinuel
-  files: []
+  files:
+    - modules/cmsis_6/
   labels:
     - "area: CMSIS_6"
 
@@ -5224,6 +5255,7 @@ West:
     - ozersa
     - ttmut
     - yasinustunerg
+    - petejohanson-adi
   files: []
   labels:
     - "platform: ADI"
@@ -5236,15 +5268,17 @@ West:
   collaborators:
     - PetervdPerk-NXP
     - jgoppert
-  files: []
+  files:
+    - modules/hal_afbr/
   labels:
     - "platform: Broadcom"
 
 "West project: hal_ambiq":
-  status: odd fixes
+  status: maintained
+  maintainers:
+    - AlessandroLuo
   collaborators:
     - aaronyegx
-    - AlessandroLuo
     - RichardSWheatley
   files:
     - modules/hal_ambiq/
@@ -5265,8 +5299,9 @@ West:
 "West project: hal_bouffalolab":
   status: maintained
   maintainers:
-    - nandojve
     - VynDragon
+  collaborators:
+    - josuah
   files:
     - modules/hal_bouffalolab/
   labels:
@@ -5315,8 +5350,6 @@ West:
 "West project: hal_gigadevice":
   status: maintained
   maintainers:
-    - nandojve
-  collaborators:
     - soburi
   files:
     - modules/hal_gigadevice/
@@ -5371,6 +5404,7 @@ West:
     - anangl
     - nika-nordic
     - masz-nordic
+    - carlescufi
   collaborators:
     - nordic-krch
     - kl-cruz
@@ -5379,6 +5413,7 @@ West:
     - mif1-nordic
     - adamkondraciuk
     - lstnl
+    - rlubos
   files:
     - modules/hal_nordic/
   labels:
@@ -5461,6 +5496,17 @@ West:
     - modules/hal_rpi_pico/
   labels:
     - "platform: Raspberry Pi Pico"
+
+"West project: hal_sifli":
+  status: maintained
+  maintainers:
+    - gmarull
+  collaborators:
+    - cameled
+  files:
+    - modules/hal_sifli/
+  labels:
+    - "platform: SF32LB"
 
 "West project: hal_silabs":
   status: maintained
@@ -5718,6 +5764,7 @@ West:
   maintainers:
     - pdgendt
   files:
+    - doc/services/serialization/nanopb.rst
     - modules/nanopb/
     - samples/modules/nanopb/
     - tests/modules/nanopb/
@@ -5812,6 +5859,8 @@ West:
   collaborators:
     - Vge0rge
     - wearyzen
+    - valeriosetti
+    - tomi-font
     - ithinuel
   files: []
   labels:
@@ -5847,6 +5896,8 @@ West:
   collaborators:
     - Vge0rge
     - wearyzen
+    - valeriosetti
+    - tomi-font
     - ithinuel
   files: []
   labels:
@@ -5978,11 +6029,12 @@ Xen Platform:
     - "area: Xen Platform"
 
 Xilinx Platforms:
-  status: odd fixes
+  status: maintained
+  maintainers:
+    - michalsimek
   collaborators:
     - henrikbrixandersen
     - ibirnbaum
-    - michalsimek
   files:
     - boards/amd/
     - drivers/*/*xilinx*
@@ -6063,11 +6115,27 @@ nRF BSIM:
   tests:
     - boards.nrf52_bsim
 
+nRF IronSide SE Platforms:
+  status: maintained
+  maintainers:
+    - hakonfam
+  collaborators:
+    - "57300"
+    - jonathannilsen
+    - karstenkoenig
+    - SebastianBoe
+  files:
+    - soc/nordic/ironside/
+    - soc/nordic/common/uicr/
+  labels:
+    - "platform: nRF IronSide SE"
+
 nRF Platforms:
   status: maintained
   maintainers:
     - anangl
     - masz-nordic
+    - bjarki-andreasen
   collaborators:
     - jaz1-nordic
     - kl-cruz

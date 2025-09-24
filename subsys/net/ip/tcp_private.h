@@ -149,7 +149,7 @@
 	({                                                                     \
 		NET_DBG("[%p] total=%zd, unacked_len=%d, "		       \
 			"send_win=%hu, mss=%hu",                               \
-			(_conn), net_pkt_get_len((_conn)->send_data),          \
+			(_conn), net_pkt_get_len(&(_conn)->send_data),         \
 			_conn->unacked_len, _conn->send_win,                   \
 			(uint16_t)conn_mss((_conn)));                          \
 		NET_DBG("[%p] send_data_timer=%hu, send_data_retries=%hu",     \
@@ -258,13 +258,21 @@ typedef void (*net_tcp_closed_cb_t)(struct tcp *conn, void *user_data);
 struct tcp { /* TCP connection */
 	sys_snode_t next;
 	struct net_context *context;
-	struct net_pkt *send_data;
-	struct net_pkt *queue_recv_data;
+	struct net_pkt send_data;
+	struct net_buf *queue_recv_data;
 	struct net_if *iface;
 	void *recv_user_data;
 	sys_slist_t send_queue;
 	union {
+		/* For listening TCP context, a pointer to the accept callback,
+		 * which informs the application of an incoming connection.
+		 */
 		net_tcp_accept_cb_t accept_cb;
+		/* For non-listening TCP context, a pointer to the parent
+		 * (listening) TCP context. The pointer remains valid until the
+		 * application "accepts" the connection (notified by net_tcp_conn_accepted()),
+		 * after which the pointer is cleared.
+		 */
 		struct tcp *accepted_conn;
 	};
 	net_context_connect_cb_t connect_cb;
@@ -305,6 +313,7 @@ struct tcp { /* TCP connection */
 	size_t send_data_total;
 	int unacked_len;
 	atomic_t ref_count;
+	atomic_t backlog;
 	enum tcp_state state;
 	enum tcp_data_mode data_mode;
 	uint32_t seq;
