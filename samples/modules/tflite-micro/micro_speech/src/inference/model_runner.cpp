@@ -21,9 +21,6 @@ LOG_MODULE_REGISTER(model_runner);
 /* Features type for audio processing */
 Features g_features;
 
-/* Global state for change detection */
-static int g_last_prediction_index = -1;
-
 namespace {
 
 /* Arena size for model operations - split for two models */
@@ -80,9 +77,6 @@ TfLiteStatus register_audio_preprocessor_ops(AudioPreprocessorOpResolver& op_res
     return kTfLiteOk;
 }
 
-/**
- * @brief Initialize static interpreters for both models
- */
 TfLiteStatus initialize_interpreters() {
     if (g_interpreters_initialized) {
         return kTfLiteOk;  // Already initialized
@@ -187,19 +181,15 @@ TfLiteStatus generate_single_feature(const int16_t* audio_data,
     return kTfLiteOk;
 }
 
-/**
- * @brief Generate features from audio data using static interpreter
- */
 TfLiteStatus generate_features(const int16_t* audio_data,
                             const size_t audio_data_size,
                             Features* features_output) {
-    // Ensure interpreters are initialized
     if (!g_interpreters_initialized) {
         LOG_ERR("Interpreters not initialized");
         return kTfLiteError;
     }
 
-    // Clear previous features
+    /* Clear previous features */ 
     memset(features_output, 0, sizeof(Features));
 
     /* Process audio in stride windows */
@@ -222,11 +212,7 @@ TfLiteStatus generate_features(const int16_t* audio_data,
     return kTfLiteOk;
 }
 
-/**
- * @brief Run speech recognition on generated features using static interpreter
- */
 TfLiteStatus run_micro_speech_inference(const Features& features) {
-    // Ensure interpreters are initialized
     if (!g_interpreters_initialized) {
         LOG_ERR("Interpreters not initialized");
         return kTfLiteError;
@@ -281,14 +267,6 @@ TfLiteStatus run_micro_speech_inference(const Features& features) {
     );
 
     LOG_INF("Detected: %s", kCategoryLabels[prediction_index]);
-     // Send every result through rpmsg
-    if (tty_ept.addr != RPMSG_ADDR_ANY) {
-        char msg_buff[64];
-        snprintf(msg_buff, sizeof(msg_buff), "[Z] Detected: %s\n", kCategoryLabels[prediction_index]);
-        rpmsg_send(&tty_ept, msg_buff, strlen(msg_buff));
-    }
-    
-    g_last_prediction_index = prediction_index;
 
     return kTfLiteOk;
 }
@@ -298,16 +276,14 @@ TfLiteStatus run_micro_speech_inference(const Features& features) {
 /* C API implementation */
 extern "C" {
 
-void model_runner_init(void) {
-    //LOG_INF("--- Initializing Model Runner ---");
-    
-    // Initialize static interpreters
+void model_runner_init(void) {    
+    /* Initialize static interpreters */ 
     if (initialize_interpreters() != kTfLiteOk) {
         LOG_ERR("Failed to initialize interpreters");
         return;
     }
     
-    // LOG_INF("--- Listening for commands ---");
+    LOG_INF("Model runner initialized");
 }
 
 int micro_speech_process_audio(const int16_t *audio_data,
