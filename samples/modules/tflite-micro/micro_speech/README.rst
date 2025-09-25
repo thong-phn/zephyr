@@ -114,7 +114,7 @@ Limitations
 The basic model uses an inference audio frame size of 1000 ms. 
 As a result, there are some limitations:
 
-#. If two commands are spoken in quick succession, the second command may not be detected.
-#. If a command lasts longer than 1 second, it may be detected as two separate commands.
+#. If two commands are spoken within 1000 ms, the second command may not be detected.
+#. If a command lasts longer than 1000 ms, it may be detected as two separate commands.
 
 Potential solution: Retrain the model with a smaller input frame size.
