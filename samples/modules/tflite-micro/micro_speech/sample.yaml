@@ -1,5 +1,5 @@
 sample:
-  description: Micro Speech Openamp sample
+  description: Micro Speech OpenAMP Sample
   name: micro speech openamp
 common:
   tags: tensorflow
