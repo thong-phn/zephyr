@@ -64,7 +64,6 @@ void app_receive_data_thread(void *arg1, void *arg2, void *arg3)
 	ARG_UNUSED(arg2);
 	ARG_UNUSED(arg3);
 
-	char tx_buff[64];
 	int ret;
 
 	LOG_INF("Receiving data thread started");
@@ -132,8 +131,6 @@ void app_audio_processing_thread(void *arg1, void *arg2, void *arg3)
 	ARG_UNUSED(arg1);
 	ARG_UNUSED(arg2);
 	ARG_UNUSED(arg3);
-
-	char debug_buff[128];
 
 	LOG_INF("Audio processing thread started");
 
