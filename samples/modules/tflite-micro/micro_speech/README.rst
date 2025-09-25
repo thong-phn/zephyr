@@ -57,7 +57,7 @@ The Linux application is not part of the Zephyr repository. It can be found in t
 Sample Output
 *************
 
-Linux
+Linux Application
 -----
 
 Simulation with a WAV file as input
@@ -104,8 +104,7 @@ DSP Firmware
 
 Training
 ********
-Follow the instructions `this repository`_. to train your
-own model for use in the sample.
+To train your own model for use in this sample, follow the instructions in `this repository`_.
 
 .. _this repository:
    https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech/train
