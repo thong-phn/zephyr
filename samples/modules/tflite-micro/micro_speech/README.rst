@@ -104,9 +104,9 @@ DSP Firmware
 
 Training
 ********
-To train your own model for use in this sample, follow the instructions in `this repository`_.
+To train your own model for use in this sample, follow the instructions in `this link`_.
 
-.. _this repository:
+.. _this link:
    https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech/train
 
 Limitations
