@@ -65,8 +65,8 @@ Simulation with a WAV file as input
 .. code-block:: console
 
     root@imx8mpevk:~# ./send default16.wav
-    Using TTY device: /dev/ttyRPMSG0
-    Expect audio frames: 500
+    [L] Using TTY device: /dev/ttyRPMSG0
+    [L] Expect audio frames: 500
     [L] Consumer:  Consumer thread started
     [L] Producer:  Producer thread started
     [L] Producer:  End of file reached
@@ -113,7 +113,8 @@ Limitations
 ********
 The basic model uses an inference audio frame size of 1000 ms. 
 As a result, there are some limitations:
-1. If two commands are spoken in quick succession, the second command may not be detected.
-2. If a command lasts longer than 1 second, it may be detected as two separate commands.
+
+#. If two commands are spoken in quick succession, the second command may not be detected.
+#. If a command lasts longer than 1 second, it may be detected as two separate commands.
 
 Potential solution: Retrain the model with a smaller input frame size.
