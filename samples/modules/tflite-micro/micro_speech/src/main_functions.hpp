@@ -17,7 +17,6 @@
 #ifndef MICRO_SPEECH_OPENAMP_MAIN_FUNCTIONS_H_
 #define MICRO_SPEECH_OPENAMP_MAIN_FUNCTIONS_H_
 
-/* Expose a C friendly interface for main functions. */
 #ifdef __cplusplus
 extern "C" {
 #endif

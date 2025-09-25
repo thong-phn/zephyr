@@ -15,42 +15,27 @@ LOG_MODULE_REGISTER(micro_speech_openamp, LOG_LEVEL_DBG);
 #include <stdlib.h>
 
 /* Stack sizes threads */
-#define APP_RECEIVE_TASK_STACK_SIZE (2048)
-#define APP_AUDIO_PROCESSING_TASK_STACK_SIZE (4096)
-
+#define APP_RECEIVE_TASK_STACK_SIZE 			(2048)
+#define APP_AUDIO_PROCESSING_TASK_STACK_SIZE 	(4096)
 /* Audio pipeline constants */
-#define SAMPLE_SIZE_BYTES (sizeof(int16_t))
-#define SAMPLES_PER_SECOND (16000)
-
-/*
- * We use a double-buffering mechanism. The size is set to one second of audio
- * data, which is the required input size for the model. The receive thread
- * fills one buffer while the processing thread works on the other.
- */
-#define BUFFER_SIZE_SAMPLES (SAMPLES_PER_SECOND) // 1 second of audio data
-#define BUFFER_SIZE_BYTES (BUFFER_SIZE_SAMPLES * SAMPLE_SIZE_BYTES)
-
-
-/* --- Buffers --- */
-// Double buffering for receiving and processing. Each buffer is 1 second long.
+#define SAMPLE_SIZE_BYTES 						(sizeof(int16_t))
+#define SAMPLES_PER_SECOND 						(16000)
+#define BUFFER_SIZE_SAMPLES 					(SAMPLES_PER_SECOND)
+#define BUFFER_SIZE_BYTES 						(BUFFER_SIZE_SAMPLES * SAMPLE_SIZE_BYTES)
+/* Double buffering for receiving and processing */
 static int16_t buffer_a[BUFFER_SIZE_SAMPLES];
 static int16_t buffer_b[BUFFER_SIZE_SAMPLES];
 static int16_t *write_buffer = buffer_a;
 static int16_t *processing_buffer = buffer_b;
-
-
-/* --- Threading & Synchronization --- */
+/* Threading & Synchronization */
 K_THREAD_STACK_DEFINE(thread_receive_stack, APP_RECEIVE_TASK_STACK_SIZE);
 K_THREAD_STACK_DEFINE(thread_audio_processing_stack, APP_AUDIO_PROCESSING_TASK_STACK_SIZE);
 static struct k_thread thread_receive_data;
 static struct k_thread thread_audio_processing_data;
-
 static K_SEM_DEFINE(processing_buffer_ready_sem, 0, 1);
 static K_SEM_DEFINE(ml_complete_sem, 1, 1); // Starts at 1 to allow the first file
 static K_MUTEX_DEFINE(buffer_access_mutex);
-
-
-/* --- Shared State (protected by buffer_access_mutex) --- */
+/* Shared State (protected by buffer_access_mutex) */
 static uint16_t g_samples_in_write_buffer = 0;
 static uint16_t g_samples_in_processing_buffer = 0;
 static bool g_eof_received = false;
@@ -145,7 +130,7 @@ void app_audio_processing_thread(void *arg1, void *arg2, void *arg3)
 
 	char debug_buff[128];
 
-	// LOG_INF("Audio processing thread started");
+	LOG_INF("Audio processing thread started");
 
 	while (1) {
 		k_sem_take(&processing_buffer_ready_sem, K_FOREVER); // Wait for a full buffer or EOF
@@ -186,8 +171,9 @@ void app_audio_processing_thread(void *arg1, void *arg2, void *arg3)
 }
 
 void setup() {
-    LOG_INF("Starting micro_speech_openamp application");
-    model_runner_init();
+    LOG_INF("Starting Micro Speech OpenAMP application");
+    
+	model_runner_init();
 	rpmsg_transport_start();
 
     // Create data receiving thread (higher priority)
@@ -200,8 +186,6 @@ void setup() {
 }
 
 void loop() {
-    // Main thread sleeps, worker threads do the work.
     k_sleep(K_FOREVER);
 }
-
 } /* extern "C" */

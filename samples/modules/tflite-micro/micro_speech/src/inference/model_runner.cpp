@@ -88,7 +88,7 @@ TfLiteStatus initialize_interpreters() {
         return kTfLiteOk;  // Already initialized
     }    
 
-    // LOG_INF("Initializing static interpreters");
+    LOG_INF("Initializing static interpreters");
     
     /* Audio preprocessor: Get model */
     g_audio_preprocessor_model = tflite::GetModel(g_audio_preprocessor_int8_model);
@@ -136,7 +136,7 @@ TfLiteStatus initialize_interpreters() {
     }
     
     g_interpreters_initialized = true;
-    // LOG_INF("Static interpreters initialized successfully");
+    LOG_INF("Static interpreters initialized successfully");
     if (tty_ept.addr != RPMSG_ADDR_ANY) {
         char msg_buff[64];
         snprintf(msg_buff, sizeof(msg_buff), "[Z] Init Done \n");
