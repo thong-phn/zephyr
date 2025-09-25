@@ -1,5 +1,17 @@
 /*
- * Manage RPMSG communication for audio processing
+ * Copyright 2025 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 #ifndef RPMSG_TRANSPORT_H
@@ -12,67 +24,21 @@
 extern "C" {
 #endif
 
-/**
- * @brief Structure to hold a received RPMSG message.
- *
- * This is used in the message queue between the RPMSG callback and the
- * consumer thread.
- */
 struct rpmsg_rcv_msg {
     void *data;
     size_t len;
 };
 
-/* --- Public kernel objects --- */
-
-/**
- * @brief Message queue for incoming TTY messages.
- *
- * The RPMSG receive callback places messages here. The application's
- * data receiving thread consumes them.
- */
+/* Kernel objects */
 extern struct k_msgq tty_msgq;
-
-/**
- * @brief RPMSG endpoint for TTY communication.
- *
- * The application thread creates and uses this endpoint.
- */
 extern struct rpmsg_endpoint tty_ept;
-
-/**
- * @brief Semaphore to signal that the RPMSG device is ready.
- *
- * The application thread waits on this semaphore before creating an endpoint.
- */
 extern struct k_sem data_tty_ready_sem;
-
-/**
- * @brief The main RPMSG device instance.
- *
- * Needed by the application to create an endpoint.
- */
 extern struct rpmsg_device *rpdev;
 
-
-/* --- Public functions --- */
-
-/**
- * @brief Starts the RPMSG transport management task.
- *
- * This function initializes and starts a new thread to handle the
- * RPMSG platform initialization and management.
- */
+/* Functions */
 void rpmsg_transport_start(void);
-
-/**
- * @brief The callback function for receiving TTY data.
- *
- * This function is passed to rpmsg_create_ept.
- */
 int rpmsg_recv_tty_callback(struct rpmsg_endpoint *ept, void *data,
-                size_t len, uint32_t src, void *priv);
-
+                                size_t len, uint32_t src, void *priv);
 #ifdef __cplusplus
 }
 #endif
