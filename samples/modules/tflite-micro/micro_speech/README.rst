@@ -55,9 +55,12 @@ The Linux application is not part of the Zephyr repository. It can be found in t
    https://github.com/thong-phn/linux-app
 
 Sample Output
-=============
+*************
 
-Linux Application, Simulation with a WAV file as input
+Linux
+-----
+
+Simulation with a WAV file as input
 
 .. code-block:: console
 
@@ -72,7 +75,7 @@ Linux Application, Simulation with a WAV file as input
     [L] Consumer:  EOF marker sent to Zephyr
     [L] Consumer:  Consumer thread finished
 
-Linux Application, Real-time Recording
+Real-time Recording
 
 .. code-block:: console
 
@@ -92,6 +95,7 @@ Linux Application, Real-time Recording
     [L] Application finished.
 
 DSP Firmware
+------------
 
 .. code-block:: console
 
