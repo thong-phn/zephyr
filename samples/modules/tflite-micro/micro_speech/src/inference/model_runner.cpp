@@ -292,9 +292,7 @@ void model_runner_init(void) {
     if (initialize_interpreters() != kTfLiteOk) {
         LOG_ERR("Failed to initialize interpreters");
         return;
-    }
-    
-    LOG_INF("Model runner initialized");
+    }    
 }
 
 int micro_speech_process_audio(const int16_t *audio_data,

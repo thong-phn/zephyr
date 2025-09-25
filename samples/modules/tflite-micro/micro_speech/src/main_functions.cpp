@@ -32,12 +32,12 @@ LOG_MODULE_REGISTER(micro_speech_openamp);
 
 /* Stack sizes threads */
 #define APP_RECEIVE_TASK_STACK_SIZE 			(2048)
-#define APP_AUDIO_PROCESSING_TASK_STACK_SIZE 	(4096)
+#define APP_AUDIO_PROCESSING_TASK_STACK_SIZE 	        (4096)
 /* Audio pipeline constants */
-#define SAMPLE_SIZE_BYTES 						(sizeof(int16_t))
-#define SAMPLES_PER_SECOND 						(16000)
-#define BUFFER_SIZE_SAMPLES 					(SAMPLES_PER_SECOND)
-#define BUFFER_SIZE_BYTES 						(BUFFER_SIZE_SAMPLES * SAMPLE_SIZE_BYTES)
+#define SAMPLE_SIZE_BYTES 			        (sizeof(int16_t))
+#define SAMPLES_PER_SECOND 				(16000)
+#define BUFFER_SIZE_SAMPLES 				(SAMPLES_PER_SECOND)
+#define BUFFER_SIZE_BYTES 				(BUFFER_SIZE_SAMPLES * SAMPLE_SIZE_BYTES)
 /* Double buffering for receiving and processing */
 static int16_t buffer_a[BUFFER_SIZE_SAMPLES];
 static int16_t buffer_b[BUFFER_SIZE_SAMPLES];
