@@ -147,18 +147,13 @@ TfLiteStatus initialize_interpreters() {
     
     g_interpreters_initialized = true;
     LOG_INF("Static interpreters initialized successfully");
-    if (tty_ept.addr != RPMSG_ADDR_ANY) {
-        char msg_buff[64];
-        snprintf(msg_buff, sizeof(msg_buff), "[Z] Init Done \n");
-        rpmsg_send(&tty_ept, msg_buff, strlen(msg_buff));
-    }
+ 
     return kTfLiteOk;
 }
 
 TfLiteStatus generate_single_feature(const int16_t* audio_data,
                                     const int audio_data_size,
                                     int8_t* feature_output) {
-    // Ensure interpreters are initialized
     if (!g_interpreters_initialized) {
         LOG_ERR("Interpreters not initialized");
         return kTfLiteError;

@@ -29,13 +29,11 @@ struct rpmsg_rcv_msg {
     size_t len;
 };
 
-/* Kernel objects */
 extern struct k_msgq tty_msgq;
 extern struct rpmsg_endpoint tty_ept;
 extern struct k_sem data_tty_ready_sem;
 extern struct rpmsg_device *rpdev;
 
-/* Functions */
 void rpmsg_transport_start(void);
 int rpmsg_recv_tty_callback(struct rpmsg_endpoint *ept, void *data,
                                 size_t len, uint32_t src, void *priv);

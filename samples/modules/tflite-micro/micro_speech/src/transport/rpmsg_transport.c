@@ -1,6 +1,23 @@
+/*
+ * Copyright 2025 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "rpmsg_transport.h"
 
 #include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(rpmsg_transport);
 #include <zephyr/device.h>
 #include <zephyr/drivers/ipm.h>
 
@@ -13,32 +30,26 @@
 #include <zephyr/shell/shell_rpmsg.h>
 #endif
 
-LOG_MODULE_REGISTER(rpmsg_transport, LOG_LEVEL_ERR);
-
 #if !DT_HAS_CHOSEN(zephyr_ipc_shm)
 #error "Sample requires definition of shared memory for rpmsg"
 #endif
 
 /* Constants from device tree */
 #define SHM_NODE		DT_CHOSEN(zephyr_ipc_shm)
-#define SHM_START_ADDR	DT_REG_ADDR(SHM_NODE)
+#define SHM_START_ADDR	        DT_REG_ADDR(SHM_NODE)
 #define SHM_SIZE		DT_REG_SIZE(SHM_NODE)
-
 /* Stack size for the management thread */
 #define APP_TASK_STACK_SIZE (1024)
 
 #if CONFIG_IPM_MAX_DATA_SIZE > 0
-
 #define	IPM_SEND(dev, w, id, d, s) ipm_send(dev, w, id, d, s)
 #else
 #define IPM_SEND(dev, w, id, d, s) ipm_send(dev, w, id, NULL, 0)
 #endif
-
 /* Thread definitions */
 K_THREAD_STACK_DEFINE(thread_mng_stack, APP_TASK_STACK_SIZE);
 static struct k_thread thread_mng_data;
-
-/* RPMSG and OpenAMP components */
+/* OpenAMP components */
 static const struct device *const ipm_handle = DEVICE_DT_GET(DT_CHOSEN(zephyr_ipc));
 static metal_phys_addr_t shm_physmap = SHM_START_ADDR;
 static metal_phys_addr_t rsc_tab_physmap;
@@ -48,28 +59,13 @@ static struct metal_io_region *shm_io = &shm_io_data;
 static struct metal_io_region *rsc_io = &rsc_io_data;
 static struct rpmsg_virtio_device rvdev;
 static void *rsc_table;
-
-/* --- Public variables --- */
+/* Public variables */
 struct rpmsg_device *rpdev;
 struct rpmsg_endpoint tty_ept;
 K_MSGQ_DEFINE(tty_msgq, sizeof(struct rpmsg_rcv_msg), 16, 4);
 K_SEM_DEFINE(data_tty_ready_sem, 0, 1);
-
-/* --- Internal semaphore, hidden from other files --- */
+/* Internal semaphore, hidden from other files */
 static K_SEM_DEFINE(data_sem, 0, 1);
-
-/* --- Forward declarations --- */
-/* -- Internal function --- */
-static void rpmsg_mng_task(void *arg1, void *arg2, void *arg3);
-static int platform_init(void);
-static void cleanup_system(void);
-static void new_service_cb(struct rpmsg_device *rdev, const char *name, uint32_t src);
-static int mailbox_notify(void *priv, uint32_t id);
-static struct rpmsg_device *platform_create_rpmsg_vdev(rpmsg_ns_bind_cb ns_cb);
-/* -- Public function --- */
-void rpmsg_transport_start(void);
-
-/* --- Function Implementations --- */
 
 static void platform_ipm_callback(const struct device *dev, void *context,
                   uint32_t id, volatile void *data)
