@@ -65,6 +65,14 @@ MFD
   kconfig symbol ``MFD_AXP192_AXP2101`` is removed. :kconfig:option:`MFD_AXP192` is now to be
   used for AXP192 device while :kconfig:option:`MFD_AXP2101` for the AXP2101 one.
 
+PWM
+===
+
+* :dtcompatible:`nxp,pca9685` ``invert`` property has been removed and you can now use the
+  :c:macro:`PWM_POLARITY_INVERTED` or :c:macro:`PWM_POLARITY_NORMAL` flags as specifier cells for
+  space "pwm" are now named: ``['channel', 'period', 'flags']`` (old value:
+  ``['channel', 'period']``) and ``#pwm-cells`` const value changed from 2 to 3.
+
 Phy
 ===
 
@@ -114,7 +122,7 @@ Bluetooth Audio
   :c:enumerator:`BT_AUDIO_CODEC_CFG_TARGET_LATENCY_BALANCED` and ``target_phy`` to
   :c:enumerator:`BT_AUDIO_CODEC_CFG_TARGET_PHY_2M`.
   The :c:macro:`BT_AUDIO_CODEC_CFG` macro defaults to these values.
-  (:github:`93825``)
+  (:github:`93825`)
 * Setting the BGS role for GMAP now requires also supporting and implementing the
   :kconfig:option:`CONFIG_BT_BAP_BROADCAST_ASSISTANT`.
   See the :zephyr:code-sample:`bluetooth_bap_broadcast_assistant` sample as a reference.
@@ -122,7 +130,7 @@ Bluetooth Audio
   :c:func:`bt_bap_scan_delegator_set_pa_state` must be used to update the state. If the
   BAP Scan Delegator is used together with the BAP Broadcast Sink, then the PA state of the
   receive state of a  :c:struct:`bt_bap_broadcast_sink` will still be automatically updated when the
-  PA state changes. (:github:`95453``)
+  PA state changes. (:github:`95453`)
 
 
 .. zephyr-keep-sorted-stop
@@ -262,6 +270,15 @@ Silabs
 
 * The separate ``em3`` power state was removed from Series 2 SoCs. The system automatically
   transitions to EM2 or EM3 depending on hardware peripheral requests for the oscillators.
+
+LVGL
+====
+
+* The PIXEL_FORMAT_MONO10 and PIXEL_FORMAT_MONO01 formats were swapped
+  in :zephyr_file:`modules/lvgl/lvgl_display_mono.c`, which caused
+  black and white to be inverted when using LVGL with monochrome displays.
+  This issue has now been fixed. Any workarounds previously applied to achieve the expected
+  behavior should be removed, otherwise black and white will be inverted again.
 
 Architectures
 *************

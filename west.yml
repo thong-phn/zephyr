@@ -169,7 +169,7 @@ manifest:
       groups:
         - hal
     - name: hal_espressif
-      revision: f89d5ed56649917970067e113289fa252267fa7f
+      revision: 44c5ab74101497697e73c06aab82bab20852f3aa
       path: modules/hal/espressif
       west-commands: west/west-commands.yml
       groups:
@@ -195,7 +195,7 @@ manifest:
       groups:
         - hal
     - name: hal_microchip
-      revision: db50e73b20f29ab758b3a79f173db37826434936
+      revision: ac9c1231020d29aa0285a4e63b66f465b3942eed
       path: modules/hal/microchip
       groups:
         - hal
@@ -210,7 +210,7 @@ manifest:
       groups:
         - hal
     - name: hal_nxp
-      revision: bcab469190b4302bb2f78cc20768f1c719595cba
+      revision: aa3d275aa690dd364503d83ecf730da367297af9
       path: modules/hal/nxp
       groups:
         - hal
@@ -226,7 +226,7 @@ manifest:
         - hal
     - name: hal_renesas
       path: modules/hal/renesas
-      revision: f0b78440ba8f0b4a07cdd657031ac9ec1cc4c126
+      revision: d8ee5f18e95b9f4616a481be65e2c9ee0af1779f
       groups:
         - hal
     - name: hal_rpi_pico
@@ -240,7 +240,7 @@ manifest:
       groups:
         - hal
     - name: hal_silabs
-      revision: edbd418670ad8c7cad629a09df2ceee0bc23cf6d
+      revision: b71ca6e4cb7a2ba9413dcdaf256527a4f0c4167a
       path: modules/hal/silabs
       groups:
         - hal
