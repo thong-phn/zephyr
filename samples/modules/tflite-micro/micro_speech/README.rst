@@ -99,8 +99,17 @@ DSP Firmware
 
 .. code-block:: console
 
-    [00:00:02.697,000] <inf> model_runner: Detected: yes
-    [00:00:03.697,000] <inf> model_runner: Detected: no
+        [00:00:00.697,000] <inf> micro_speech_openamp: Starting Micro Speech OpenAMP application
+        [00:00:01.231,000] <inf> micro_speech_openamp: Audio processing thread started
+        [00:00:02.321,000] <inf> micro_speech_openamp: Audio processing thread started
+        [00:00:03.591,000] <inf> model_runner: Initializing static interpreters
+        [00:00:03.941,000] <inf> model_runner: Static interpreters initialized successfully
+        [00:00:04.981,000] <inf> model_runner: Detected: yes
+        [00:00:06.102,000] <inf> model_runner: Detected: no
+        [00:00:07.202,000] <inf> model_runner: Detected: silence
+        [00:00:09.102,000] <inf> model_runner: Detected: noise
+
+
 
 Training
 ********
