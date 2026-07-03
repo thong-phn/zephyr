@@ -14,6 +14,8 @@ The remote core processes the audio data and performs inference using TensorFlow
 that detects 2 speech commands ("yes" and "no"), as well as "silence" and "unknown".
 
 .. mermaid::
+   :caption: OpenAMP Micro Speech architecture
+   :alt: Diagram showing audio flow from Linux userspace through RPMsg to Zephyr for TFLM processing
 
 	graph LR
 		subgraph "Main Core"
