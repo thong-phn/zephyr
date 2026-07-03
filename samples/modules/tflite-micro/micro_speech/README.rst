@@ -1,43 +1,44 @@
 .. zephyr:code-sample:: tflite-micro-speech-openamp
    :name: Micro Speech OpenAMP
 
-   Recognize speech commands from audio input received on Cortex-A cores and
-   processed on the HiFi4 DSP of the i.MX8M Plus EVK board using TensorFlow Lite
+   Recognize speech commands from audio input received on a main core and
+   processed on a remote coprocessor using TensorFlow Lite
    for Microcontrollers with a 20KB neural network.
 
 Overview
 ********
 
-This sample requires an application running on the Cortex-A cores of the i.MX8M Plus
-to capture audio and send it to the HiFi4 DSP using OpenAMP. The DSP processes
-the audio data and performs inference using TensorFlow Lite Micro that
-detects 2 speech commands ("yes" and "no"), as well as "silence" and "unknown".
+This sample requires an application running on a primary core to capture audio and 
+send it to a remote coprocessor using OpenAMP.
+The remote core processes the audio data and performs inference using TensorFlow Lite Micro
+that detects 2 speech commands ("yes" and "no"), as well as "silence" and "unknown".
 
-.. code-block:: text
+.. mermaid::
 
-   +------------------------- Cortex A (main core) -------------+                            +--------------- HiFi4 DSP (remote core) --------------+
-   |                                                            |                            |                                                      |
-   |  [ALSA/arecord] -> [Linux userspace] -> [/dev/ttyRPMSG*]   |----------> [RPMsg] ------->|  [ring/msgq] -> [frontend] -> [TFLM] -> [output]     |
-   |                                                            |                            |                                                      |
-   +------------------------------------------------------------+                            +------------------------------------------------------+
+   graph LR
+       subgraph "Main Core (e.g. Linux)"
+           A[ALSA/arecord] --> B[Linux userspace]
+           B --> C[/dev/ttyRPMSG*]
+       end
 
-.. Note::
-    This README and sample have been modified from
-    `the TensorFlow Hello World sample`_,
-    `the OpenAMP using resource table from Zephyr`_ and
-    `the Micro Speech Example from TensorFlow Lite for Microcontrollers`_.
+       subgraph "Remote Core (e.g. Zephyr)"
+           D[ring/msgq] --> E[frontend]
+           E --> F[TFLM]
+           F --> G[output]
+       end
 
-Audio contract
+       C -- "RPMsg" --> D
+
+Audio format
 --------------
 - Sample rate: 16kHz
 - Sample format: S16_LE
 - Frame size (samples per RPMsg payload): 20ms (320 samples or 640 bytes)
 - Endianness: LE
 
-Compatibility
--------------
-- Validated Platform: i.MX8MP with the HiFi4 DSP core.
-- Porting: It is compatible with other boards, but this requires creating a new board configuration and updating the DTS overlays to match the target hardware.
+This sample implementation is compatible with platforms that embed
+a Linux kernel OS on the main processor and a Zephyr application on
+the co-processor.
 
 Building and Running
 ********************
@@ -46,8 +47,8 @@ West Module Filters
 -------------------
 This sample requires the tflite-micro module.
 
-DSP Firmware
-------------
+Remote Core
+-----------------------------
 
 Add the tflite-micro module to your West manifest and pull it:
 
@@ -61,17 +62,19 @@ The sample can be built as follows:
 .. zephyr-app-commands::
    :zephyr-app: samples/modules/tflite-micro/micro_speech
    :host-os: unix
-   :board: imx8mp_evk/mimx8ml8/adsp
+   :board: <board_name>
    :goals: run
    :compact:
 
-Linux Application
+
+
+Main Core
 -----------------
 
-The Linux application is not part of the Zephyr repository. It can be found in the `this repository`_.
+The main core application is not part of the Zephyr repository. A sample implementation can be found in the `this repository`_.
 
 .. _this repository:
-   https://github.com/thong-phn/linux-app
+   https://github.com/thong-phn/gsoc2025-linux-app
 
 Sample Output
 *************
@@ -83,7 +86,7 @@ Simulation with a WAV file as input
 
 .. code-block:: console
 
-    root@imx8mpevk:~# ./send default16.wav
+    root@linuxshell:~# ./send default16.wav
     [L] Using TTY device: /dev/ttyRPMSG0
     [L] Expect audio frames: 500
     [L] Consumer:  Consumer thread started
@@ -98,7 +101,7 @@ Real-time Recording
 
 .. code-block:: console
 
-    root@imx8mpevk:~# ./record hw:5,0 /dev/ttyRPMSG0
+    root@linuxshell:~# ./record hw:5,0 /dev/ttyRPMSG0
     [L] Using PCM device: hw:5,0
     [L] Using TTY device: /dev/ttyRPMSG0
     [L] PCM device hw:5,0 configured for 16kHz, S16_LE, Mono
@@ -113,8 +116,8 @@ Real-time Recording
     [L] Consumer:  Consumer thread finished
     [L] Application finished.
 
-HiFi4 DSP
----------
+Remote Core (Zephyr)
+--------------------
 
 .. code-block:: console
 

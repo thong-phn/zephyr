@@ -41,8 +41,12 @@ target_sources(
   ${OPTIONAL_TFLITE_DIR}/src/fft_auto_scale.cc
   ${OPTIONAL_TFLITE_DIR}/src/max_abs.cc
   ${OPTIONAL_TFLITE_DIR}/src/msb_32.cc
+  ${OPTIONAL_TFLITE_DIR}/src/msb_64.cc
   ${OPTIONAL_TFLITE_DIR}/src/energy.cc
   ${OPTIONAL_TFLITE_DIR}/src/filter_bank.cc
+  ${OPTIONAL_TFLITE_DIR}/src/filter_bank_square_root.cc
+  ${OPTIONAL_TFLITE_DIR}/src/square_root_32.cc
+  ${OPTIONAL_TFLITE_DIR}/src/square_root_64.cc
   ${OPTIONAL_TFLITE_DIR}/src/pcan_argc_fixed.cc
   ${OPTIONAL_TFLITE_DIR}/src/filter_bank_log.cc
   ${OPTIONAL_TFLITE_DIR}/src/log.cc
@@ -67,5 +71,14 @@ if("${ARCH}" STREQUAL "xtensa")
   ${OPTIONAL_TFLITE_DIR}/micro/kernels/xtensa/fft_auto_scale_kernel.cc
   ${OPTIONAL_TFLITE_DIR}/micro/kernels/xtensa/filter_bank_square_root.cc
   ${OPTIONAL_TFLITE_DIR}/micro/kernels/xtensa/xtensa_square_root.S
+  )
+elseif("${ARCH}" STREQUAL "arm")
+  target_sources(
+  app
+  PRIVATE
+
+  # Generic kernels
+  ${OPTIONAL_TFLITE_DIR}/micro/kernels/fft_auto_scale_kernel.cc
+  ${OPTIONAL_TFLITE_DIR}/micro/kernels/filter_bank_square_root.cc
   )
 endif()

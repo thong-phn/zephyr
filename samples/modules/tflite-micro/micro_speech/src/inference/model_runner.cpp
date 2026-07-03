@@ -17,6 +17,7 @@
  */
 
 #include "model_runner.hpp"
+#include "../transport/rpmsg_transport.h"
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(model_runner);
@@ -280,6 +281,12 @@ TfLiteStatus run_micro_speech_inference(const Features& features) {
     );
 
     LOG_INF("Detected: %s", kCategoryLabels[prediction_index]);
+
+    char result_msg[64];
+    int msg_len = snprintf(result_msg, sizeof(result_msg), "Detected: %s\n", kCategoryLabels[prediction_index]);
+    if (msg_len > 0) {
+        rpmsg_send(&tty_ept, result_msg, msg_len);
+    }
 
     return kTfLiteOk;
 }
