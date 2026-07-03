@@ -8,26 +8,26 @@
 Overview
 ********
 
-This sample requires an application running on a primary core to capture audio and 
+This sample requires an application running on a primary core to capture audio and
 send it to a remote coprocessor using OpenAMP.
 The remote core processes the audio data and performs inference using TensorFlow Lite Micro
 that detects 2 speech commands ("yes" and "no"), as well as "silence" and "unknown".
 
 .. mermaid::
 
-   graph LR
-       subgraph "Main Core (e.g. Linux)"
-           A[ALSA/arecord] --> B[Linux userspace]
-           B --> C[/dev/ttyRPMSG*]
-       end
+	graph LR
+		subgraph "Main Core"
+			A[ALSA/arecord] --> B[Linux userspace]
+			B --> C[/dev/ttyRPMSG*/]
+		end
 
-       subgraph "Remote Core (e.g. Zephyr)"
-           D[ring/msgq] --> E[frontend]
-           E --> F[TFLM]
-           F --> G[output]
-       end
+		subgraph "Remote Core"
+			D[ring/msgq] --> E[frontend]
+			E --> F[TFLM]
+			F --> G[output]
+		end
 
-       C -- "RPMsg" --> D
+		C -- "RPMsg" --> D
 
 Audio format
 --------------
@@ -47,7 +47,7 @@ West Module Filters
 -------------------
 This sample requires the tflite-micro module.
 
-Remote Core
+Zephyr setup
 -----------------------------
 
 Add the tflite-micro module to your West manifest and pull it:
@@ -61,14 +61,9 @@ The sample can be built as follows:
 
 .. zephyr-app-commands::
    :zephyr-app: samples/modules/tflite-micro/micro_speech
-   :host-os: unix
-   :board: <board_name>
-   :goals: run
-   :compact:
+   :goals: build
 
-
-
-Main Core
+Linux setup
 -----------------
 
 The main core application is not part of the Zephyr repository. A sample implementation can be found in the `this repository`_.
@@ -79,8 +74,8 @@ The main core application is not part of the Zephyr repository. A sample impleme
 Sample Output
 *************
 
-Linux
------
+Linux console
+-----------------
 
 Simulation with a WAV file as input
 
@@ -116,7 +111,7 @@ Real-time Recording
     [L] Consumer:  Consumer thread finished
     [L] Application finished.
 
-Remote Core (Zephyr)
+Zephyr console
 --------------------
 
 .. code-block:: console
@@ -130,8 +125,8 @@ Remote Core (Zephyr)
         [00:00:06.102,000] <inf> model_runner: Detected: no
         [00:00:07.202,000] <inf> model_runner: Detected: silence
 
-Training
-********
+Model Training
+**************
 To train your own model for use in this sample, follow the instructions in `this link`_.
 
 .. _this link:
